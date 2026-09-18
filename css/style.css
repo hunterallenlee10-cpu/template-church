@@ -32,6 +32,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* keep anchored sections clear of the fixed nav */
+  scroll-padding-top: calc(5.5rem + env(safe-area-inset-top, 0px));
   height: 100%;
 }
 
@@ -106,6 +108,7 @@ body {
 .nav-logo {
   display: inline-flex;
   align-items: center;
+  white-space: nowrap;
   gap: 0.65rem;
   color: var(--gold);
   text-decoration: none;
@@ -133,15 +136,69 @@ body {
 .nav-links a:hover,
 .nav-links a:focus-visible { color: var(--gold); }
 
+.nav-toggle {
+  display: none;
+  align-items: center;
+  background: rgba(227, 181, 88, 0.08);
+  border: 1px solid var(--gold-soft);
+  border-radius: 8px;
+  color: var(--gold);
+  padding: 0.45rem 0.55rem;
+  cursor: pointer;
+}
+.nav-toggle:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
 @media (max-width: 760px) {
+  .nav { gap: 0.8rem; }
   .nav-links { display: none; }
-  .nav { justify-content: space-between; }
+  /* (0,3,0) so it beats the later base `.nav-links + .btn-small` */
+  .nav .nav-links + .btn-small { margin-left: auto; }
+  .nav-toggle { display: inline-flex; }
+  .nav.menu-open {
+    background: rgba(8, 11, 25, 0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  .nav.menu-open .nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0.4rem 1.2rem 1rem;
+    background: rgba(8, 11, 25, 0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--gold-soft);
+    box-shadow: 0 24px 50px rgba(3, 5, 12, 0.55);
+  }
+  .nav.menu-open .nav-links a {
+    padding: 0.85rem 0.2rem;
+    border-top: 1px solid rgba(154, 162, 188, 0.14);
+  }
+  .nav.menu-open .menu-only { display: block; }
+}
+
+/* In the dropdown only — desktop shows the pill instead */
+.menu-only { display: none; }
+
+/* The pill doesn't fit beside the logo and hamburger on small
+   phones; the dropdown and the hero CTA carry it there.
+   (0,2,0 so the later base `.btn` display rule can't win the tie) */
+@media (max-width: 430px) {
+  .nav .btn-small { display: none; }
+  /* the hidden pill was the auto-margin carrier */
+  .nav .nav-toggle { margin-left: auto; }
 }
 
 /* ── Buttons ─────────────────────────────────────────────── */
 
 .btn {
   display: inline-block;
+  white-space: nowrap;
   font-family: var(--body);
   font-size: 0.85rem;
   font-weight: 500;
@@ -312,8 +369,17 @@ p { margin: 0 0 1rem; }
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(rgba(7, 10, 24, 0.42) 0%, rgba(7, 10, 24, 0) 30%),
-    linear-gradient(rgba(7, 10, 24, 0) 42%, rgba(7, 10, 24, 0.55) 78%, rgba(7, 10, 24, 0.94) 100%);
+    linear-gradient(rgba(7, 10, 24, 0.5) 0%, rgba(7, 10, 24, 0) 28%),
+    linear-gradient(rgba(7, 10, 24, 0) 40%, rgba(7, 10, 24, 0.55) 76%, rgba(7, 10, 24, 0.94) 100%);
+}
+/* On phones the text block is centered over the media's bright
+   middle, so the scrim must carry contrast the whole way down. */
+@media (max-width: 640px) {
+  .hero-scrim {
+    background:
+      linear-gradient(rgba(7, 10, 24, 0.58) 0%, rgba(7, 10, 24, 0.3) 28%,
+        rgba(7, 10, 24, 0.42) 52%, rgba(7, 10, 24, 0.72) 80%, rgba(7, 10, 24, 0.95) 100%);
+  }
 }
 
 .hero-inner {
@@ -336,9 +402,13 @@ p { margin: 0 0 1rem; }
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--slate);
+  text-shadow: 0 1px 12px rgba(4, 6, 15, 0.9);
 }
 .hero-times .dot { color: var(--gold); padding: 0 0.4rem; }
+.hero-inner .eyebrow { text-shadow: 0 1px 12px rgba(4, 6, 15, 0.85); }
 
+/* The hint fades in (opacity only — never a competing transform)
+   while its inner svg carries the bob, so the two never collide. */
 .scroll-hint {
   position: absolute;
   left: 50%;
@@ -346,12 +416,47 @@ p { margin: 0 0 1rem; }
   transform: translateX(-50%);
   color: var(--gold);
   opacity: 0.8;
+  animation: hint-in 0.9s ease 0.6s both;
+}
+.scroll-hint svg {
+  display: block;
   animation: bob 2.6s ease-in-out infinite;
 }
-@keyframes bob {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%       { transform: translateX(-50%) translateY(8px); }
+@keyframes hint-in {
+  from { opacity: 0.3; }
+  to   { opacity: 0.8; }
 }
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(8px); }
+}
+
+.motion-toggle {
+  position: absolute;
+  right: clamp(1rem, 4vw, 3rem);
+  bottom: 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  border: 1px solid rgba(242, 236, 221, 0.3);
+  background: rgba(8, 11, 25, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--ivory);
+  cursor: pointer;
+  transition: border-color 0.25s, color 0.25s;
+}
+.motion-toggle:hover,
+.motion-toggle:focus-visible { border-color: var(--gold); color: var(--gold); }
+.motion-toggle:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.motion-toggle .icon-play { display: none; }
+.motion-paused .motion-toggle .icon-play { display: block; }
+.motion-paused .motion-toggle .icon-pause { display: none; }
+.motion-paused .glory-rays,
+.motion-paused .scroll-hint svg { animation-play-state: paused; }
 
 /* Hero entrance — runs on load, never from fully invisible */
 .hero-fade { animation: rise 0.9s cubic-bezier(0.22, 0.7, 0.3, 1) both; }
@@ -404,7 +509,7 @@ p { margin: 0 0 1rem; }
 .js .reveal.shown { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-fade, .scroll-hint, .glory-rays { animation: none; }
+  .hero-fade, .scroll-hint, .scroll-hint svg, .glory-rays { animation: none; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
 }
 
@@ -622,4 +727,4 @@ blockquote footer span { color: var(--slate); padding-left: 0.6rem; }
   text-transform: uppercase;
 }
 .footer nav a:hover { color: var(--gold); }
-.colophon { font-size: 0.8rem; color: rgba(154, 162, 188, 0.6); margin: 0; }
+.colophon { font-size: 0.8rem; color: var(--slate); margin: 0; }
