@@ -23,13 +23,17 @@
       </svg>
       <span>Lumen Chapel</span>
     </a>
-    <nav class="nav-links" aria-label="Primary">
+    <nav class="nav-links" id="nav-links" aria-label="Primary">
       <a href="#welcome">Welcome</a>
       <a href="#worship">Worship</a>
       <a href="#ministries">Ministries</a>
       <a href="#events">Events</a>
+      <a class="menu-only" href="#visit">Plan a visit</a>
     </nav>
     <a class="btn btn-small" href="#visit">Plan a visit</a>
+    <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
   </header>
 
   <main id="top">
@@ -70,7 +74,11 @@
         </div>
         <p class="hero-times hero-fade f5">Sundays 9:00 &amp; 11:00 <span class="dot">·</span> Candlelight Evensong Wednesdays 6:30</p>
       </div>
-      <a class="scroll-hint hero-fade f5" href="#welcome" aria-label="Scroll to welcome">
+      <button class="motion-toggle" id="motion-toggle" aria-label="Pause background animation">
+        <svg class="icon-pause" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M9 6v12M15 6v12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+        <svg class="icon-play" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M9 6l10 6-10 6z" fill="currentColor"/></svg>
+      </button>
+      <a class="scroll-hint" href="#welcome" aria-label="Scroll to welcome">
         <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 4v14m0 0l-6-6m6 6l6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </section>
@@ -79,7 +87,7 @@
     <section class="section" id="welcome">
       <div class="panel reveal">
         <p class="eyebrow">Welcome</p>
-        <h2>A sanctuary of light, kept burning for sixty years.</h2>
+        <h2>A sanctuary of light, kept burning for more than sixty years.</h2>
         <p>Lumen Chapel began in 1962 as a fieldstone chapel on a hill at the edge of town — a place where the lamps stayed lit for anyone walking home late. The town has grown up around us, but the practice hasn't changed: the door is unlocked, the candles are lit, and the kettle is usually on.</p>
         <p>We're a congregation of a few hundred neighbors — carpenters and nurses, students and retirees, lifelong believers and people who slipped into the back pew last month and stayed. You don't need to have it figured out to belong here.</p>
         <blockquote>
@@ -191,6 +199,6 @@
     <p class="colophon">© <span id="year">2026</span> Lumen Chapel · a church website template — make it your own</p>
   </footer>
 
-  <script type="module" src="js/main.js"></script>
+  <script defer src="js/main.js"></script>
 </body>
 </html>
