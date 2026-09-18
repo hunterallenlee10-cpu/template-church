@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Lumen Chapel</title>
+  <meta name="description" content="Lumen Chapel — a sanctuary of light. Worship times, ministries, seasonal events, and directions.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0e1f'/%3E%3Cpath d='M16 6v20M10 13h12' stroke='%23e3b558' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+
+  <header class="nav" id="nav">
+    <a class="nav-logo" href="#top" aria-label="Lumen Chapel — home">
+      <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
+        <circle cx="16" cy="16" r="14.5" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".55"/>
+        <path d="M16 7v18M10.5 14h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span>Lumen Chapel</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#welcome">Welcome</a>
+      <a href="#worship">Worship</a>
+      <a href="#ministries">Ministries</a>
+      <a href="#events">Events</a>
+    </nav>
+    <a class="btn btn-small" href="#visit">Plan a visit</a>
+  </header>
+
+  <main id="top">
+
+    <!-- ═══ Hero — Father, Son, and Holy Spirit ═══ -->
+    <section class="hero" id="hero">
+      <div class="hero-media" aria-hidden="true">
+        <div class="glory">
+          <div class="glory-rays"></div>
+          <svg class="glory-cross" viewBox="0 0 120 160" width="120" height="160" aria-hidden="true">
+            <circle cx="60" cy="52" r="34" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.5"/>
+            <path d="M60 14v132M34 52h52" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <!--
+          The Trinity animation: the Father, the Son, and the Holy
+          Spirit as a dove, in a slow orbital rotation. The local
+          file in assets/ is tried first; drop your own render at
+          assets/hero-trinity.mp4 to self-host it. If no source
+          loads, the glory-light layer above simply remains.
+        -->
+        <video id="hero-video" autoplay muted loop playsinline preload="auto"
+               poster="https://media.viewmax.io/users/YMslZ8EgxeqMwG9EddPzWxp43TbBQZYA/sora-videos/929958259359490068/6b25122d-274b-4049-9c25-2470e9f6c14c.first.jpg">
+          <source src="assets/hero-trinity.mp4" type="video/mp4">
+          <source src="https://media.viewmax.io/users/YMslZ8EgxeqMwG9EddPzWxp43TbBQZYA/sora-videos/929958259359490068/0ae0222a-a9f8-4606-9b1d-0b98f70ffb54.mp4" type="video/mp4">
+        </video>
+        <canvas id="motes"></canvas>
+        <div class="hero-scrim"></div>
+      </div>
+      <div class="hero-inner">
+        <p class="eyebrow hero-fade f1">Father · Son · Holy Spirit</p>
+        <h1 class="hero-fade f2">Lumen<br>Chapel</h1>
+        <p class="hero-sub hero-fade f3">An old stone church with an open door —<br class="wide-only">
+          candlelight, choral music, and a table with room for you.</p>
+        <div class="hero-cta hero-fade f4">
+          <a class="btn btn-gold" href="#visit">Plan a visit</a>
+          <a class="btn btn-ghost" href="#worship">Worship times</a>
+        </div>
+        <p class="hero-times hero-fade f5">Sundays 9:00 &amp; 11:00 <span class="dot">·</span> Candlelight Evensong Wednesdays 6:30</p>
+      </div>
+      <a class="scroll-hint hero-fade f5" href="#welcome" aria-label="Scroll to welcome">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 4v14m0 0l-6-6m6 6l6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </section>
+
+    <!-- ═══ Welcome ═══ -->
+    <section class="section" id="welcome">
+      <div class="panel reveal">
+        <p class="eyebrow">Welcome</p>
+        <h2>A sanctuary of light, kept burning for sixty years.</h2>
+        <p>Lumen Chapel began in 1962 as a fieldstone chapel on a hill at the edge of town — a place where the lamps stayed lit for anyone walking home late. The town has grown up around us, but the practice hasn't changed: the door is unlocked, the candles are lit, and the kettle is usually on.</p>
+        <p>We're a congregation of a few hundred neighbors — carpenters and nurses, students and retirees, lifelong believers and people who slipped into the back pew last month and stayed. You don't need to have it figured out to belong here.</p>
+        <blockquote>
+          <p>“Whoever you are, whatever you're carrying — come sit in the light awhile.”</p>
+          <footer>Rev. Elena Marsh <span>Senior Pastor</span></footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ═══ Worship ═══ -->
+    <section class="section" id="worship">
+      <div class="panel reveal">
+        <p class="eyebrow">Worship with us</p>
+        <h2>Gather at the table.</h2>
+        <ul class="services">
+          <li>
+        	<div class="service-when"><strong>Sunday</strong><span>9:00 AM</span></div>
+        	<div class="service-what"><h3>Holy Eucharist</h3><p>A quiet, traditional liturgy — organ, chancel choir, and communion open to all.</p></div>
+          </li>
+          <li>
+        	<div class="service-when"><strong>Sunday</strong><span>11:00 AM</span></div>
+        	<div class="service-what"><h3>Family Service</h3><p>A lively all-ages hour with our worship band, children's church, and a lot of joyful noise.</p></div>
+          </li>
+          <li>
+        	<div class="service-when"><strong>Wednesday</strong><span>6:30 PM</span></div>
+        	<div class="service-what"><h3>Candlelight Evensong</h3><p>Ancient prayers sung by candlelight — thirty minutes of stillness in the middle of the week.</p></div>
+          </li>
+        </ul>
+        <p class="fineprint">Nursery care at both Sunday services · Every service streamed live</p>
+      </div>
+    </section>
+
+    <!-- ═══ Ministries ═══ -->
+    <section class="section" id="ministries">
+      <div class="panel panel-wide reveal">
+        <p class="eyebrow">Life together</p>
+        <h2>Find your place.</h2>
+        <div class="ministry-grid">
+          <article><h3>Kids &amp; Youth</h3><p>Sunday school during both services; youth group Fridays with pizza, honest questions, and an annual summer camp.</p></article>
+          <article><h3>Sacred Music</h3><p>Chancel choir, a handbell ensemble, and the 1,200-pipe Casavant organ that has led our singing since 1974.</p></article>
+          <article><h3>Community Pantry</h3><p>Groceries for eighty neighbor families every Saturday morning — no forms, no questions, just full bags.</p></article>
+          <article><h3>Small Groups</h3><p>Scripture, supper, and honest conversation around kitchen tables across the city, most weeknights.</p></article>
+          <article><h3>Prayer &amp; Care</h3><p>A prayer chain, hospital visits, and a meal train for seasons of joy and seasons of grief alike.</p></article>
+          <article><h3>Missions</h3><p>Long partnerships from our own block to a sister parish in Guatemala — hands, funds, and friendship.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Events ═══ -->
+    <section class="section" id="events">
+      <div class="panel reveal">
+        <p class="eyebrow">This season</p>
+        <h2>Mark your calendar.</h2>
+        <ul class="events">
+          <li>
+        	<time datetime="2026-10-04"><strong>Oct</strong><span>4</span></time>
+        	<div><h3>Blessing of the Animals</h3><p>Bring every creature, feathered or furred, to the front lawn. 10:00 AM.</p></div>
+          </li>
+          <li>
+        	<time datetime="2026-11-26"><strong>Nov</strong><span>26</span></time>
+        	<div><h3>Community Thanksgiving Table</h3><p>One long table down the nave; everyone eats free. 5:30 PM.</p></div>
+          </li>
+          <li>
+        	<time datetime="2026-12-24"><strong>Dec</strong><span>24</span></time>
+        	<div><h3>Christmas Eve by Candlelight</h3><p>Lessons &amp; carols at 5:00 PM; midnight mass at 11:00 PM.</p></div>
+          </li>
+        </ul>
+        <p class="fineprint">Recent sermons — <em>The Light Shines in the Darkness</em> (John 1) · <em>Everything on the Table</em> (Luke 14) · listen wherever you podcast.</p>
+      </div>
+    </section>
+
+    <!-- ═══ Visit ═══ -->
+    <section class="section" id="visit">
+      <div class="panel panel-wide reveal">
+        <p class="eyebrow">Plan a visit</p>
+        <h2>The door is open.</h2>
+        <div class="visit-cols">
+          <div>
+        	<h3>Find us</h3>
+        	<p class="address">1 Chapel Hill Lane<br>Hartsdale — on the hill<br>above the old mill pond</p>
+        	<p><a class="link" href="https://www.google.com/maps/search/?api=1&amp;query=1+Chapel+Hill+Lane+Hartsdale" rel="noopener" target="_blank">Get directions ↗</a></p>
+        	<p class="address">hello@lumenchapel.org<br>(555) 014‑1962</p>
+          </div>
+          <div>
+        	<h3>What to expect</h3>
+        	<ul class="expect">
+          	<li>Dress however you're comfortable — suits and work boots sit in the same pew.</li>
+          	<li>Services run about an hour; Evensong, half that.</li>
+          	<li>Free parking behind the chapel; the side door has a ramp.</li>
+          	<li>Kids are welcome in worship — there are crayons in every pew rack.</li>
+        	</ul>
+          </div>
+        </div>
+        <a class="btn btn-gold" href="mailto:hello@lumenchapel.org">Say hello before you come</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p class="verse">“Arise, shine, for your light has come.” <span>— Isaiah 60:1</span></p>
+    <nav aria-label="Footer">
+      <a href="#welcome">Welcome</a>
+      <a href="#worship">Worship</a>
+      <a href="#ministries">Ministries</a>
+      <a href="#events">Events</a>
+      <a href="#visit">Visit</a>
+    </nav>
+    <p class="colophon">© <span id="year">2026</span> Lumen Chapel · a church website template — make it your own</p>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
