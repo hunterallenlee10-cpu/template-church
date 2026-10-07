@@ -1,5 +1,5 @@
 // Page behavior: nav state, scroll progress, section reveals,
-// hero video boot, and the golden-motes canvas over the hero.
+// hero motion toggle, and the golden-motes canvas over the hero.
 
 document.documentElement.classList.add('js');
 
@@ -61,16 +61,12 @@ setTimeout(() => {
 const year = document.getElementById('year');
 if (year) year.textContent = new Date().getFullYear();
 
-// ── Hero video ─────────────────────────────────────────────
-// Sources are tried in order: a local file in assets/ first,
-// then the hosted render. If neither loads, the "glory light"
-// layer beneath simply remains — the hero still stands.
+// ── Hero motion ────────────────────────────────────────────
 
 const hero = document.getElementById('hero');
-const video = document.getElementById('hero-video');
 
 // WCAG 2.2.2: a visible control that stops all hero motion —
-// the video, the rotating rays, the bobbing hint, the motes.
+// the rotating rays, the bobbing hint, the motes.
 let motionPaused = REDUCED;
 const motionBtn = document.getElementById('motion-toggle');
 // State is carried by the swapped accessible name alone — no
@@ -87,31 +83,7 @@ if (motionBtn) {
   motionBtn.addEventListener('click', () => {
     motionPaused = !motionPaused;
     applyMotionState();
-    if (video) {
-      if (motionPaused) video.pause();
-      else { video.muted = true; video.play().catch(() => {}); }
-    }
   });
-}
-
-if (video) {
-  if (REDUCED) {
-    // Respect reduced motion: hold the still first frame.
-    video.removeAttribute('autoplay');
-    video.addEventListener('loadeddata', () => {
-      // Only hold the still frame if the visitor hasn't pressed
-      // play in the meantime.
-      if (motionPaused) video.pause();
-      hero.classList.add('video-live');
-    }, { once: true });
-    video.load();
-  } else {
-    video.muted = true;
-    const live = () => hero.classList.add('video-live');
-    if (video.readyState >= 2) live();
-    else video.addEventListener('canplay', live, { once: true });
-    video.play().catch(() => { /* glory layer stays */ });
-  }
 }
 
 // ── Golden motes over the hero ─────────────────────────────

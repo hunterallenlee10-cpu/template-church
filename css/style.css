@@ -8,9 +8,8 @@
      --rose   #b45a6b   stained-glass rose
      --slate  #9aa2bc   muted text
    Type: Cormorant Garamond (display) · Jost (body / labels)
-   Hero: photoreal Trinity animation (video) over a "glory
-   light" fallback layer that stands on its own if the video
-   cannot load.
+   Hero: a "glory light" layer — gold cross, slowly turning
+   rays, and drifting motes.
    ═══════════════════════════════════════════════════════════ */
 
 :root {
@@ -308,8 +307,7 @@ p { margin: 0 0 1rem; }
   z-index: -1;
 }
 
-/* Fallback "glory light" — always painted beneath the video,
-   so the hero is beautiful even before (or without) it. */
+/* "Glory light" — the hero background: gold cross and rays. */
 .glory {
   position: absolute;
   inset: 0;
@@ -345,17 +343,6 @@ p { margin: 0 0 1rem; }
   color: rgba(244, 212, 137, 0.55);
   filter: drop-shadow(0 0 26px rgba(227, 181, 88, 0.5));
 }
-
-.hero video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 1.4s ease;
-}
-.hero.video-live video { opacity: 1; }
 
 #motes {
   position: absolute;
