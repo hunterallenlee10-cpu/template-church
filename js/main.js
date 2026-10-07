@@ -1,9 +1,8 @@
 // Page behavior: nav state, scroll progress, section reveals,
-// hero motion toggle, and the golden-motes canvas over the hero.
+// and the still golden motes painted over the hero.
 
 document.documentElement.classList.add('js');
 
-const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const nav = document.getElementById('nav');
 const bar = document.getElementById('progress-bar');
 
@@ -61,54 +60,28 @@ setTimeout(() => {
 const year = document.getElementById('year');
 if (year) year.textContent = new Date().getFullYear();
 
-// ── Hero motion ────────────────────────────────────────────
+// ── Golden motes over the hero ─────────────────────────────
+// Painted once (and again on resize) — the hero is fully still.
 
 const hero = document.getElementById('hero');
-
-// WCAG 2.2.2: a visible control that stops all hero motion —
-// the rotating rays, the bobbing hint, the motes.
-let motionPaused = REDUCED;
-const motionBtn = document.getElementById('motion-toggle');
-// State is carried by the swapped accessible name alone — no
-// aria-pressed, which would contradict a name that also changes.
-function applyMotionState() {
-  document.documentElement.classList.toggle('motion-paused', motionPaused);
-  if (motionBtn) {
-    motionBtn.setAttribute('aria-label',
-      motionPaused ? 'Play background animation' : 'Pause background animation');
-  }
-}
-applyMotionState();
-if (motionBtn) {
-  motionBtn.addEventListener('click', () => {
-    motionPaused = !motionPaused;
-    applyMotionState();
-  });
-}
-
-// ── Golden motes over the hero ─────────────────────────────
-
 const canvas = document.getElementById('motes');
-if (canvas && !REDUCED) {
+if (canvas && hero) {
   const ctx = canvas.getContext('2d');
-  let w = 0, h = 0, raf = 0;
   const DPR = Math.min(window.devicePixelRatio || 1, 2);
 
-  const N = 56;
-  const motes = Array.from({ length: N }, () => ({
+  const motes = Array.from({ length: 56 }, () => ({
     x: Math.random(),
     y: Math.random(),
     r: 0.6 + Math.random() * 1.8,
-    s: 0.006 + Math.random() * 0.02,   // rise speed (fraction of height / s)
-    drift: (Math.random() - 0.5) * 0.01,
-    phase: Math.random() * Math.PI * 2,
-    tw: 0.5 + Math.random() * 1.2,     // twinkle speed
-    a: 0.3,                            // last drawn alpha
+    a: 0.14 + Math.random() * 0.5,
   }));
 
-  // Drawing is separate from physics so a resize can repaint the
-  // frozen frame while motion is paused.
-  function draw() {
+  function paint() {
+    const w = hero.clientWidth;
+    const h = hero.clientHeight;
+    canvas.width = w * DPR;
+    canvas.height = h * DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
     ctx.clearRect(0, 0, w, h);
     for (const m of motes) {
       const g = ctx.createRadialGradient(m.x * w, m.y * h, 0, m.x * w, m.y * h, m.r * 4);
@@ -120,49 +93,6 @@ if (canvas && !REDUCED) {
       ctx.fill();
     }
   }
-
-  function size() {
-    w = hero.clientWidth;
-    h = hero.clientHeight;
-    canvas.width = w * DPR;
-    canvas.height = h * DPR;
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    draw();
-  }
-  size();
-  window.addEventListener('resize', size);
-
-  let last = performance.now();
-  function frame(now) {
-    if (motionPaused) {
-      last = now;
-      raf = requestAnimationFrame(frame);
-      return;
-    }
-    const dt = Math.min((now - last) / 1000, 0.05);
-    last = now;
-    const t = now / 1000;
-    for (const m of motes) {
-      m.y -= m.s * dt;
-      m.x += (m.drift + Math.sin(t * 0.4 + m.phase) * 0.0108) * dt;
-      if (m.y < -0.02) { m.y = 1.02; m.x = Math.random(); }
-      if (m.x < -0.02) m.x = 1.02;
-      if (m.x > 1.02) m.x = -0.02;
-      m.a = 0.14 + 0.5 * (0.5 + 0.5 * Math.sin(t * m.tw + m.phase * 3));
-    }
-    draw();
-    raf = requestAnimationFrame(frame);
-  }
-
-  // Only animate while the hero is on screen.
-  const heroWatch = new IntersectionObserver(([e]) => {
-    if (e.isIntersecting && !raf) {
-      last = performance.now();
-      raf = requestAnimationFrame(frame);
-    } else if (!e.isIntersecting && raf) {
-      cancelAnimationFrame(raf);
-      raf = 0;
-    }
-  });
-  heroWatch.observe(hero);
+  paint();
+  window.addEventListener('resize', paint);
 }
