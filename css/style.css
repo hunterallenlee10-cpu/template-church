@@ -890,3 +890,5 @@ blockquote footer span { color: var(--slate); padding-left: 0.6rem; }
 }
 .footer nav a:hover { color: var(--gold); }
 .colophon { font-size: 0.8rem; color: var(--slate); margin: 0; }
+.colophon a { color: inherit; text-decoration: none; }
+.colophon a:hover { color: var(--gold); }
